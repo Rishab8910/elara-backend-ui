@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ElaraV2 Control Panel</title>
+  <style>
+    body { font-family: sans-serif; background: #f2f2f2; margin: 0; padding: 20px; }
+    .card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .status { font-weight: bold; margin-top: 10px; }
+    h1 { color: #2a2a2a; }
+  </style>
+</head>
+<body>
+  <h1>ElaraV2 Admin Dashboard</h1>
+
+  <div class="card">
+    <h2>Agent Status</h2>
+    <div id="status">Loading...</div>
+  </div>
+
+  <div class="card">
+    <h2>Inventory</h2>
+    <div id="inventory">Loading...</div>
+  </div>
+
+  <script>
+    async function loadStatus() {
+      const res = await fetch("/api/status");
+      const data = await res.json();
+      let html = "";
+      for (const key in data) {
+        html += `<div>${key}: <span class="status">${data[key]}</span></div>`;
+      }
+      document.getElementById("status").innerHTML = html;
+    }
+
+    async function loadInventory() {
+      const res = await fetch("/api/inventory");
+      const data = await res.json();
+      let html = "";
+      for (const key in data) {
+        html += `<div>${key}: <span class="status">${data[key]}</span></div>`;
+      }
+      document.getElementById("inventory").innerHTML = html;
+    }
+
+    loadStatus();
+    loadInventory();
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+Xiaomi Camera Account Number 5239155048
+Account Password Rishab@8910!
+Camera Model
+Camera MAC 78:df:72:18:2a:dc
+Camera Name in Router XiaomiCameraBrewBionic
+Camera Static IP in Router 192.168.5.9
+Wifi Connected to Name EN LAB
+Wifi Password 9650008910
+Room Name BrewBionic
+Camera Password on App 8910

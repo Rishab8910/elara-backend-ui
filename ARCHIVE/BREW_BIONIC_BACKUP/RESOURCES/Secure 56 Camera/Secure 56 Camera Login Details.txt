@@ -1,0 +1,34 @@
+RTSP FOR VLC
+rtsp://9650008910:9650008910@192.168.5.2:8554/main_stream
+rtsp://9650008910:9650008910@192.168.5.2:8554/sub_stream1
+rtsp://9650008910:9650008910@192.168.5.2:8554/sub_stream2
+
+
+Secure 56 Camera
+Secure56
+Local Ip 192.168.5.2
+Mac Address 98:ae:71:01:a1:49
+To Open Camera on Local Http http://192.168.5.2:80/
+User Name 9650008910
+Password 9650008910
+
+DDNS SERVER
+User Name
+rishab8910
+Email to login 
+rishab@engroup.in
+Password 
+NoIp@8910!
+
+Hostname
+brewbionic.ddns.net
+Target IP
+157.49.174.42
+DDNS Key User Name
+arerh7c@ddnskey.com
+DDNS Key Password 
+1FZ6o52PF6mm
+DDNS Key Hostname: 
+all.ddnskey.com
+Friendly Name:
+group-brewbionic

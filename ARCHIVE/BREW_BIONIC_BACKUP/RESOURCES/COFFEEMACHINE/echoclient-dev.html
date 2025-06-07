@@ -1,0 +1,660 @@
+<html>
+    <head>
+        <title>ws Echo Client</title>
+				<style lang="scss">
+					body{
+						padding: 0;
+						margin: 0;
+						--headH:90px;
+						
+					}
+					.main-box{
+						display: flex;
+						align-items: flex-start;
+						height:calc(100vh - var(--headH));
+						width: 100vw;
+						/* height: 500px; */
+						/* height: 100%; */
+						
+					}
+					.send-main{
+						width: 50%;
+						background-color: antiquewhite;
+						height: 100%;
+						padding: 20px;
+						box-sizing: border-box;
+						overflow-y: scroll;
+					}
+					.send-main::-webkit-scrollbar,.response-main::-webkit-scrollbar{		
+						width:6px;
+						background-color: #fff;
+					}
+					.send-main::-webkit-scrollbar-thumb,.response-main::-webkit-scrollbar-thumb{		
+						border-radius:10px;
+						background:rgba(0,0,0,0.1);
+						-webkit-box-shadow:inset006pxrgba(0,0,0,0.5);
+					}
+					.response-main{
+					
+						width: 50%;
+						height: 100%;
+						background-color: burlywood;
+						overflow-y: scroll;
+					}
+					.main-head{
+						background-color: aqua;
+						display: flex;
+						align-items: center;
+						flex-direction: column;
+						min-height: var(--headH);
+						/* height: 90px; */
+					}
+					.debug-content{
+						padding:  50px 15px;
+					}
+					.files-btn-box{
+						background-color: cadetblue;
+						padding: 5px;
+						box-sizing: border-box;
+						/* background-clip: content-box; */
+						display: flex;
+						align-items: center;
+						width: 100%;
+						/* border: 1px solid #fff; */
+						border-radius: 8px;
+						box-shadow: 0 0 3px 0px #21242d;
+					}
+					.form-box{
+						background-color: var(--formbg);
+						padding: 5px;
+						box-sizing: border-box;
+						border-radius: 15px;
+						width: 100%;
+						/* height: 200px; */
+						margin: 5px 0;
+						box-shadow: 0 0 8px 2px #21242d;
+						
+					}
+					.form-box>form{
+						display: flex;
+						flex-direction: column;
+						align-items: flex-start;
+						justify-content: center;
+					}
+					.form-box>form>label{
+						margin: 5px 0;
+					}
+				</style>
+    </head>
+    <body>
+			<div class="main-head">
+				<h1 style="text-align: center;margin: 0;padding: 0;">ws Echo Client</h1>
+				<div style="display: flex;align-items: center;">
+					<label for="" style="margin: 0 10px;">
+						<span onclick="test();">输入地址：</span>
+						<input type="text" id="address">
+					</label>
+					<label for="" style="margin: 0 10px;">
+						<span >输入端口号：</span>
+						<input type="text" id="post">
+						<button onClick="initws();">Connect</button>
+					</label>
+				</div>
+				<div class="" style="display: flex;align-items: center;margin: 0 10px; align-self: start;">
+										 <span>连接状态(<span id="stateText"></span>):</span>
+										 <div id="state" class="status" style="width: 20px;height: 20px; display: inline-block;border-radius: 50%; --statusBgc:gray;background-color: var(--statusBgc);"></div>
+				</div>
+			</div>
+			
+			<!-- 地址输入框 -->
+			<div class="main-box">
+				<div class="send-main">
+					
+					<div style="display: flex;flex-direction: column; box-sizing: border-box; width: 100%;">
+						<div style="--formbg:#36d;" class="form-box">
+							<form id="file-text-form">
+								<label for="">
+									<span>文件位置：</span>
+									<input name="fpos" type="text"  placeholder="输入文件位置" value="/VMC/data">
+									
+								</label>
+								<label for="">
+									<span>文件名：</span>
+									<input name="fname"  type="text" placeholder="输入文件名" >
+								</label>
+								<div class="files-btn-box">
+									<input type="file" id="file-text" multiple>
+									<button class="sendFile" data-type="1" type="button">发送文件</button>
+								</div>
+							</form>
+							<span class="">文件后缀识别为：<span class="f_suffix"></span></span>
+						</div>
+						
+						
+						<div style="--formbg:#b2cc8a;" class="form-box" >
+							<form id="file-binary-form">
+								<label for="">
+									<span>文件位置：</span>
+									<input name="fpos" type="text" placeholder="输入文件位置" value="/data/wwwroot/docroot/menu/producticon" >								
+								</label>
+								<label for="">
+									<span>文件名：</span>
+									<input name="fname" type="text" placeholder="输入文件名" >
+								</label>
+									<div class="files-btn-box">
+										<input type="file" id="file-binary" multiple>
+										<button class="sendFile" data-type="2" type="button">发送二进制文件</button>
+									</div>
+								
+							</form>
+							<span class="">文件后缀识别为：<span class="f_suffix"></span></span>
+						</div>
+						
+						
+					</div>
+					  <!-- 发送区 -->
+						<div>
+								<div class="debug-content" style="width:100%;box-sizing: border-box;">
+									<span>log:</span>
+									<textarea id="debugTextArea" style="width:100%;height:200px;" disabled></textarea>
+									<div>
+										<button onClick="stopws();">Disconnect</button>
+										<button onClick="checkSocket();">State</button>
+									</div>
+									
+								</div>
+							   
+							
+							    
+							  <!-- <input type="text" id="inputText" onkeydown="if(event.keyCode==13)sendMessage();"/> -->
+								<form id="dataType">
+										<!-- 	<label for=""><span>二进制<input type="radio" name="failType" value="1" class="failType"></span></label>
+											<label for=""><span>文本<input type="radio" name="failType" checked value="2" class="failType"></span></label> -->
+								</form>
+								<textarea type="text" id="command" style="width: 100%;min-height: 100px;"></textarea> 
+							  <button onClick="sendMessage();">Send</button>
+								
+						</div>
+					
+				</div>
+				<div class="response-main" style="box-sizing: border-box;">
+					<div class="debug-content" style="width:100%;box-sizing: border-box;">
+						<textarea name=""  id="response" style="height:200px; width:100%;" disabled ></textarea>
+						<div>
+							<input type="text">
+							<button onClick="sendMessage();">Send</button>
+						</div>
+					</div>
+					
+					
+				</div>
+			</div>
+			<script src="./spark-md5.min.js"></script>
+			<script>
+						let qy = document.querySelector.bind(document)
+						let qyAll = document.querySelectorAll.bind(document)
+            var debugTextArea = document.getElementById("debugTextArea");
+						let address = qy('#address')
+						let command = qy('#command')
+						let post = qy('#post')
+						let state = qy('#state')
+						let stateText = qy('#stateText')
+						let response = qy('#response')
+						let ws = null;
+						let sendFile_btn = qyAll('.sendFile')
+						let fname = qyAll('[name="fname"]')
+						let files_el =  qyAll('[type="file"]')
+						let kb_size = 16 * 1024 //文件大小区分值
+						let stateContent={
+							col:'#c1c1c1',
+							code:3,
+							msg:'ununited'
+						}
+					
+						window.addEventListener('load',()=>{
+							address.value = 'ws://vendui.icoffee-tea.com'
+							post.value= '1234'
+							state.style.setProperty('--statusBgc',stateContent.col)
+							stateText.innerHTML = stateContent.msg;
+							
+						})
+							
+						// 文件名输入框
+						fname.forEach(v=>{
+							v.addEventListener('input',handleIptChange)
+							
+						})
+			
+						sendFile_btn.forEach(v=>{
+							v.addEventListener('click',sendFile_pivot)
+						}) 
+						// 获取文件
+						files_el.forEach(v=>{
+							v.addEventListener('change',(e)=>{
+									
+									let fn_value = e.target.value.substr(e.target.value.lastIndexOf('\\')+1)
+									let fname_el = e.target.form.parentElement.querySelector('[name="fname"]')
+									fname_el.value = fn_value
+									let  ipt_text_suffix = fSuffix(fname_el.value)
+
+									let f_suffix_el = e.target.form.parentElement.querySelector('.f_suffix')
+									let suffix_text = fSuffix(e.target.value)
+									
+									handleELMain(f_suffix_el,suffix_text)
+							})
+						})
+           
+						function debug(message) {
+                debugTextArea.value += message + "\n";
+                debugTextArea.scrollTop = debugTextArea.scrollHeight;
+            }
+						
+						//发送文本
+           function sendMessage() {
+								let text = command.value
+							
+                if ( ws != null )
+                {
+									// 发送的数据
+									ws.send(text);
+                    console.log( "string sent :", '"'+text+'"' );
+                }else{
+									debug('ununited!')
+								}
+								
+								
+								
+            }
+					 //文件名输入处理函数
+					 function handleIptChange(e){
+							let hasFile = false
+							let suffix = ''
+							new Set(e.target.form.elements).forEach(v=>{
+								if(v.type == 'file'){
+								hasFile = Boolean(v.value)
+								suffix = v.value ? fSuffix(v.value) :''
+								}
+							}) 
+							let el = e.target.form.parentElement.querySelector('.f_suffix')
+							let  ipt_text_suffix = fSuffix(e.target.value)
+							if(ipt_text_suffix.length >= 2){
+								suffix= ipt_text_suffix
+								
+							}else{
+								
+							}
+							handleELMain(el,suffix)
+						
+						
+					 }
+					 // 元素内容
+					 function handleELMain(el,text){
+						 
+							el.innerHTML=text
+					 } 
+					 // 获取文件后缀
+					 function fSuffix(text){
+						 // let suffix = text.slice(text.lastIndexOf('.'),text.length)
+						 
+						 let suffix = text.substr(text.lastIndexOf('.'))
+						 
+						 return suffix
+					 }
+					 //切片函数
+					 function file_slice(file_blob,slice_size){
+							
+							
+							let start = 0
+							let end = slice_size
+							let count = Math.ceil(file_blob.size/slice_size)
+							let farr = []
+							for(let i = 1 ;i <=count ;null ){
+							
+								farr.push(file_blob.slice(start,end))
+								start = end
+								end = slice_size*(++i)
+								
+							}
+							return farr
+					 }
+					 //上传函数
+					 function upload(file,type){
+						
+						 file.arrayBuffer().then(res=>{
+							  console.log('file:',res)
+							 ws.send(res)
+						 })
+						 
+						 return
+						 switch (type){
+						 	case '1'://普通文件上传
+								ws.send(file)
+						 		break;
+							case '2'://二进制文件上传
+								ws.send(file)
+								break;	
+						 	default:
+						 		break;
+						 }
+						
+					 }
+						//文件头整理 File文件对象，期望字节大小
+					async	function init_fhead(press,type){
+						
+						
+						let opts = {
+							fsize:`${press.file.size}`,
+							post:`${press.post}`,
+							fid:`${press.file.lastModified}`,
+							length:`${press.file.size}`,
+							fname: `${press.fname}${press.fsuffix}`,
+							fpos:`${press.fpos}`
+						}		
+						let fh_u8arr_str = ''
+						// let fharr_u8arr_str = ''
+						let fh_u8arr255 = new Uint8Array(press.size)
+						let md5Value = ''
+						let md5_spark = new SparkMD5.ArrayBuffer()
+						let fharr_u8arr255 = []
+						let frame = 0  //帧值
+						switch (type){ 
+ 							case '101'://101 普通文件
+								md5_spark.append(await press.file.arrayBuffer())
+							
+								
+								break;
+							case '201'://201 小于16kb二进制文件
+								md5_spark.append(await press.file.arrayBuffer())
+								
+								
+								break;
+							case '202':// 202 大于16kb二进制文件
+								
+								for(let i = 0; i < press.fileArr.length; i++){
+									md5_spark.append(await press.fileArr[i].arrayBuffer())
+								}
+								md5Value = md5_spark.end()
+								break;		
+							default:
+								break;
+						}
+						
+						if(type == '202'){
+							
+							
+							press.fileArr.forEach(async(v,i)=>{
+								
+								
+								let fharr_u8arr_str = `${opts.post}${'/'+opts.fid}${'/'+md5Value}${'/'+opts.length}${'/'+((frame+=kb_size)-kb_size)}${'/'+opts.fpos}${'/'+opts.fname}`
+								let fheadarr =new Uint8Array(await  new Blob([fharr_u8arr_str]).arrayBuffer())
+								let fharr_u8arr255_blob = new Uint8Array(press.size)
+								fheadarr.forEach((v,i)=>{
+									fharr_u8arr255_blob[i] = v
+								})
+								fharr_u8arr255.push({fileArr_itme:v,fharr_u8arr_str,fharr_u8arr255_blob})
+								
+								
+								
+							})
+						}else{
+							md5Value = md5_spark.end()
+						}
+						
+						
+						fh_u8arr_str = `${opts.post}${'/'+opts.fid}${'/'+md5Value}${'/'+opts.length}${'/0'}${'/'+opts.fpos}${'/'+opts.fname}`
+							// 制作头信息
+							let fhead =new Uint8Array(await  new Blob([fh_u8arr_str]).arrayBuffer())
+							fhead.forEach((v,i)=>{
+								fh_u8arr255[i] = v
+							})
+							// console.log(fh_u8arr255,fharr_u8arr255,md5Value)
+							return {fh_u8arr255,fharr_u8arr255}
+							
+					}
+					// 生成文件
+					function file_blob(){
+						
+						
+					}
+					
+           //文件处理中枢 
+					 function sendFile_pivot(e){
+							let filedom = e.target.previousElementSibling
+						 let pass = true
+							let form_values =  e.target.form
+							let inputs =new Set(form_values.getElementsByTagName('input'))
+							let fname_el = form_values.parentElement.querySelector('[name="fname"]')
+							let fpos_el = form_values.parentElement.querySelector('[name="fpos"]')
+							let f_suffix_el = form_values.parentElement.querySelector('.f_suffix')
+							let headData = {} //头信息对象
+							inputs.forEach(v=>{
+								if(v.type =='text'){
+								
+									if(v.value == ''){
+										alert('表单未输入完整，请检查是否不为空') 
+										
+										pass = false
+										return
+									}
+									
+									
+								}
+								
+							})
+							// 表单验证是否通过
+							if(!pass)return 
+							else {
+								// 生成初步头信息对象
+								headData={
+									post:'/Post',
+									fname: `${fname_el.value.slice(0,fname_el.value.lastIndexOf('.'))}`,
+									fpos:`${fpos_el.value}`,
+									fsuffix:`${f_suffix_el.innerHTML}`,
+								}
+							}
+						  if (ws != null) 
+							{
+								
+								
+								if( !filedom.value)  return debug('No file selected')
+								let fileLists = new Set(filedom.files)
+								let file = ''
+								let fhead_blob = {}
+								fileLists.forEach(async (file_obj,i,arr)=>{
+									// 获取文件头
+									let count = 0 //计算发送次数
+									switch (e.target.dataset.type){
+										case '1'://文件
+												fhead_blob =await  init_fhead({...headData,file:file_obj,size:256,},'101')
+												file = new Blob([fhead_blob.fh_u8arr255,file_obj])
+												
+												upload(await file.text(),'1')
+												count++
+											break;
+										case '2'://二进制文件
+												if(file_obj.size > kb_size){
+													// 切片数组
+													let fileArr = file_slice(file_obj,kb_size)
+													fhead_blob =await init_fhead({...headData,file:file_obj,size:256,fileArr,},'202')
+													fhead_blob.fharr_u8arr255.forEach(async item=>{
+														file = new Blob([item.fharr_u8arr255_blob,item.fileArr_itme])
+														upload(file,'2')
+														count++
+													})	
+												}
+												// 小于16kb
+												else{
+													fhead_blob =await  init_fhead({...headData,file:file_obj,size:256,},'201')
+													file = new Blob([fhead_blob.fh_u8arr255,file_obj])
+													upload(file,'2')
+													count++
+												}	
+											
+											break;	
+										default:
+											break;
+									}
+										// 一秒后清空文件
+										setTimeout(()=>{
+											// console.log(count)
+											filedom.value = null
+											fname_el.value = ''
+											f_suffix_el.innerHTML = ''
+										},1000)
+								})
+								
+												
+							}
+							else{
+								debug('ununited!')
+							}
+							
+					 }
+						
+            
+
+            function initws() {
+							
+                try {
+                    if (typeof Mozws == 'function')
+                        ws = Mozws;
+                    if ( ws && ws.readyState == 1 )
+                        ws.close();
+										let url = `${address.value}:${post.value}`
+												
+                    ws = new WebSocket(url);
+                    ws.onopen = function (evt) {
+												stateContent = {
+													col:'green',
+													code:ws.readyState,
+													msg:'CONNECTED'
+												}
+												state.style.setProperty('--statusBgc',stateContent.col)
+												stateText.innerHTML = stateContent.msg
+                        debug("CONNECTED");
+                    };
+                    ws.onclose = function (evt) {
+												stateContent = {
+													col:'#c1c1c1',
+													code:ws.readyState,
+													msg:'DISCONNECTED'
+												}
+												state.style.setProperty('--statusBgc',stateContent.col)
+												stateText.innerHTML = stateContent.msg
+                        debug("DISCONNECTED");
+                    };
+                    ws.onmessage = function (evt) {
+												
+                        console.log( "Message received :", evt.data );
+												
+                        debug( evt.data );
+												if(evt.data.size){
+													(async()=>{
+														
+														return 
+														const array  = await evt.data.arrayBuffer()
+														const u8arr =new Uint8Array(array)
+														const u8arrString = u8arr.toString(2)
+														
+														const handle = await window.showSaveFilePicker(
+															{
+																suggestedName: `fileName.txt`,
+														     types: [
+																	 {
+																		 
+																			 accept: {
+																					'text/plain': ['.txt'],
+																					
+																			 }
+																	 },
+																	 {
+																																		 
+																			 accept: {
+																						'image/*': ['.png'],
+																					
+																			 }
+																	 },
+																 ],
+														     // 可以选择多个图片
+														     multiple: true
+														  }
+														)
+														const writable = await handle.createWritable()
+														await writable.write(u8arrString)
+														await writable.close()
+														
+														
+													})()
+													
+												}
+												
+												
+												
+                    };
+                    ws.onerror = function (evt) {
+												stateContent = {
+													col:'#c1c1c1',
+													code:ws.readyState,
+													msg:'ERROR'
+												}
+												state.style.setProperty('--statusBgc',stateContent.col)
+												stateText.innerHTML = stateContent.msg
+                        debug('ERROR: ' + evt.data);
+                    };
+                } catch (exception) {
+										stateContent = {
+											col:'#c1c1c1',
+											code:3
+										}
+										state.style.setProperty('--statusBgc',stateContent.col)
+										stateText.innerHTML = stateContent.msg
+                    debug('ERROR: ' + exception);
+                }
+								
+            }
+
+            function stopws() {
+                if (ws)
+                    ws.close();
+            }
+
+            function checkSocket() {
+                if (ws != null) {
+                    var stateStr;
+										
+                    switch (ws.readyState) {
+                        case 0: {
+                            stateStr = "CONNECTING";
+                            break;
+                        }
+                        case 1: {
+                            stateStr = "OPEN";
+                            break;
+                        }
+                        case 2: {
+                            stateStr = "CLOSING";
+														
+                            break;
+                        }
+                        case 3: {
+                            stateStr = "CLOSED";
+													
+                            break;
+                        }
+                        default: {
+                            stateStr = "UNKNOW";
+														
+                            break;
+                        }
+                    }
+                    debug("ws state = " + ws.readyState + " ( " + stateStr + " )");
+                } else {
+                    debug("ws is null");
+                }
+            }
+        </script>
+    </body>
+			
+
+
+</html>

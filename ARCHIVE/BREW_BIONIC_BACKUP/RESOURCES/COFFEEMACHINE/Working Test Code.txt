@@ -1,0 +1,1 @@
+{"cmd":"products","vmc_no":"701188","make_product_session_id":1001,"product_id":["950"],"count":[1],"recipe_adjust":false,"fake_making":false,"wait_for_payment":false}

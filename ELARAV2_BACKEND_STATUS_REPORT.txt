@@ -1,0 +1,71 @@
+=== ElaraV2 Backend Health Report ===
+Generated: 2025-06-07 13:27:47
+
+âœ… backend_ui_server.py - 1030 bytes - Last modified: 06/07/2025 07:45:10
+âœ… elara_config_backend.json - 57 bytes - Last modified: 06/07/2025 07:45:10
+âœ… RUN_UI_SERVER.ps1 - 259 bytes - Last modified: 06/07/2025 07:45:10
+âœ… index.html - 1392 bytes - Last modified: 06/07/2025 07:45:10
+
+--- Folder Structure ---
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE
+C:\Users\admin\Music\ElaraV2\backend_ui\templates
+C:\Users\admin\Music\ElaraV2\backend_ui\backend_ui_deploy.log
+C:\Users\admin\Music\ElaraV2\backend_ui\backend_ui_server.py
+C:\Users\admin\Music\ElaraV2\backend_ui\DEPLOY_BACKEND_UI.ps1
+C:\Users\admin\Music\ElaraV2\backend_ui\ELARAV2_BACKEND_STATUS_REPORT.txt
+C:\Users\admin\Music\ElaraV2\backend_ui\elara_config_backend.json
+C:\Users\admin\Music\ElaraV2\backend_ui\index.html
+C:\Users\admin\Music\ElaraV2\backend_ui\RUN_UI_SERVER.ps1
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\config
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\config.yaml
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\elara_config.json
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\inventory_sync.py
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\main.py
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\modbus_comm.py
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\robot_comm.py
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\ROLLBACK_ElaraV2.ps1
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\ROLLBACK_ElaraV2_CLEAN.ps1
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\test_agent_connectivity.py
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\test_modbus_responses.py
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\UPDATE_ElaraV2.ps1
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\UPDATE_ElaraV2_CLEAN.ps1
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\UPDATE_ElaraV2_CLEAN_EXCLUDE_BACKUPS.ps1
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\UPDATE_ElaraV2_FINAL_LOGGED.ps1
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEPRINTER
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Mi Camera Brew Bionic
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\COMO table fresh coffee machine installation instructions.pdf
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\echoclient-dev.html
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\Fresh milk module automatic cleaning guide V2.pdf
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\Fresh milk module automatic cleaning guide.pdf
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\Fresh milk table fresh coffee machine installation and use instructions.pdf
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\http to open Machine Locally.txt
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\Link To Open Coffee Machine Online MQTT.txt
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\Macas Open VMC interface_EN.doc
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\MacasSoftwareUserManual.pdf
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\NEW TT +++·¦++˜-¦++-¦+˜-T tabletop machine operating instructions.docx
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\Regular setting of mocha.jpeg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\TT  +S++¦Ñ-+ó.pdf
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEMACHINE\Working Test Code.txt
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEPRINTER\Coffee Printer Excel Commands.xlsx
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\COFFEEPRINTER\WhatsApp Image 2024-03-22 at 2.03.53 PM (1).jpeg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Mi Camera Brew Bionic\Xiaomi Camera  Login Details.txt
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\Acess Plateform.jpg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\Bonjour.jpg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\Certificate.jpg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\DDNS.jpg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\Ethernet Settings.jpg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\Main Stream.jpg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\Ports.jpg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\Secure 56 Camera Login Details.txt
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\server.cer
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\Sub Stream 1.jpg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\Sub Stream 2.jpg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\BREW_BIONIC_BACKUP\RESOURCES\Secure 56 Camera\Wifi Settings.jpg
+C:\Users\admin\Music\ElaraV2\backend_ui\ARCHIVE\config\config.yaml
+C:\Users\admin\Music\ElaraV2\backend_ui\templates\index.html
+
+âœ… Report Complete
