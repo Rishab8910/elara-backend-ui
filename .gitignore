@@ -1,0 +1,16 @@
+﻿# Sensitive configuration files
+ARCHIVE/config/config.yaml
+
+# Bytecode and local Python cache
+__pycache__/
+*.py[cod]
+
+# Log files
+*.log
+
+# IDE settings
+.vscode/
+*.swp
+
+# Environment files
+.env
