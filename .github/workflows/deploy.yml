@@ -1,0 +1,46 @@
+﻿name: ElaraV2 Deploy
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Upload to S3 (placeholder)
+      run: |
+        echo "Uploading to S3..."
+        aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }}/elara-v2 --exclude ".git/*"
+
+    - name: Generate changelog
+      id: changelog
+      run: |
+        git log -1 --pretty=format:"%h - %s (%an)" > body.txt
+
+    - name: Create GitHub Release with changelog
+      uses: softprops/action-gh-release@v1
+      with:
+        name: Elara Backend ${{ github.ref_name }}
+        tag_name: ${{ github.ref }}
+        body_path: body.txt
+
+    - name: Upload Elara ZIP
+      run: zip -r elara_backend.zip . -x "*.git*" "*/__pycache__/*"
+
+    - name: Attach ZIP to GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: elara_backend.zip
